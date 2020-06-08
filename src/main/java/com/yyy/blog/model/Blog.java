@@ -15,12 +15,12 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotEmpty
+    @NotNull
     @Length(min = 4)
     private String title;
 
     @Column(columnDefinition="TEXT",length = 20000)
-    @NotEmpty
+    @NotNull
     @Length(min = 100)
     private String content;
 

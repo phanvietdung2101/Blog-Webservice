@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
+@Table(name = "`like`")
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
