@@ -29,7 +29,6 @@ public class User {
     private String email;
 
     @ManyToOne
-    @NotNull
     private Role role;
 
 }
