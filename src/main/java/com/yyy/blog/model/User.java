@@ -18,11 +18,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
+    @NotEmpty
     @Length(min = 4, max = 50)
     private String username;
 
-    @NotNull
+    @NotEmpty
     @Length(min = 4, max = 50)
     private String password;
 
@@ -30,6 +30,5 @@ public class User {
     @NotEmpty
     @Length(min = 6, max = 50)
     private String email;
-
 
 }

@@ -17,7 +17,7 @@ public class Comment {
     @NotNull
     private User user;
 
-    @NotNull
+    @NotEmpty
     @Column(length = 1000)
     private String content;
 
