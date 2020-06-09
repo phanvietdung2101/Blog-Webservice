@@ -35,24 +35,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addNewUser(User user) {
-        boolean isSave = false;
-        if(user.getRole() == null){
-            Role role_user = findRoleByRoleName("ROLE_USER");
-            if(role_user == null){
-                // Set default role
-                role_user = new Role();
-                role_user.setName("ROLE_USER");
-            } else {
-                user.setRole(role_user);
-            }
+        boolean isCreate = false;
+        Role role_user = this.roleRepository.findRoleByName("ROLE_USER");
+        if(role_user == null){
+            role_user = new Role();
+            role_user.setName("ROLE_USER");
+            this.roleRepository.save(role_user);
         }
+        user.setRole(role_user);
         try {
             this.userRepository.save(user);
-            isSave = true;
+            isCreate = true;
         } catch (Exception e){
             e.printStackTrace();
         }
-        return isSave;
+        return isCreate;
     }
 
     @Override
