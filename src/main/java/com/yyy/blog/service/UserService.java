@@ -7,6 +7,6 @@ import com.yyy.blog.model.User;
 public interface UserService {
     User findUserByUsername(String username);
     User findUserById(long id);
-    boolean addNewUser(User user);
+    void addNewUser(User user);
     Role findRoleByRoleName(String role_name);
 }

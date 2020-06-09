@@ -34,8 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addNewUser(User user) {
-        boolean isCreate = false;
+    public void addNewUser(User user) {
         Role role_user = this.roleRepository.findRoleByName("ROLE_USER");
         if(role_user == null){
             role_user = new Role();
@@ -45,11 +44,9 @@ public class UserServiceImpl implements UserService {
         user.setRole(role_user);
         try {
             this.userRepository.save(user);
-            isCreate = true;
         } catch (Exception e){
             e.printStackTrace();
         }
-        return isCreate;
     }
 
     @Override
