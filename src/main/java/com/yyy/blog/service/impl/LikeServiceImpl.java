@@ -1,4 +1,8 @@
 package com.yyy.blog.service.impl;
 
-public class LikeServiceImpl {
+import com.yyy.blog.service.LikeService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class LikeServiceImpl implements LikeService {
 }
