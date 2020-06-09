@@ -20,37 +20,31 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User findUserByUsername(String username) {
+    public Optional<User> findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
     }
 
     @Override
-    public User findUserById(long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if(optionalUser.isPresent()){
-            return optionalUser.get();
-        }
-        throw new RuntimeException("User not found");
+    public Optional<User> findUserById(long id) {
+        return this.userRepository.findById(id);
     }
 
     @Override
     public void addNewUser(User user) {
-        Role role_user = this.roleRepository.findRoleByName("ROLE_USER");
-        if(role_user == null){
-            role_user = new Role();
-            role_user.setName("ROLE_USER");
-            this.roleRepository.save(role_user);
+        Optional<Role> optionalRole = this.roleRepository.findRoleByName("ROLE_USER");
+        if(!optionalRole.isPresent()){
+            Role default_role = new Role();
+            default_role.setName("ROLE_USER");
+            this.roleRepository.save(default_role);
+            user.setRole(default_role);
+        } else {
+            user.setRole(optionalRole.get());
         }
-        user.setRole(role_user);
-        try {
-            this.userRepository.save(user);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        this.userRepository.save(user);
     }
 
     @Override
-    public Role findRoleByRoleName(String role_name) {
+    public Optional<Role> findRoleByRoleName(String role_name) {
         return this.roleRepository.findRoleByName(role_name);
     }
 }
