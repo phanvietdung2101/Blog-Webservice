@@ -10,5 +10,6 @@ public interface UserService {
     Optional<User> findUserByUsername(String username);
     Optional<User> findUserById(long id);
     void addNewUser(User user);
+    void updateUser(User user);
     Optional<Role> findRoleByRoleName(String role_name);
 }

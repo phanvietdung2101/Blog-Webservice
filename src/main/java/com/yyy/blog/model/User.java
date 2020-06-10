@@ -18,11 +18,11 @@ public class User {
 
     @NotEmpty
     @Length(min = 6, max = 50)
+    @Column(unique = true)
     private String username;
 
     @NotEmpty
     @Length(min = 6, max = 50)
-    @UniqueElements
     private String password;
 
     @Email

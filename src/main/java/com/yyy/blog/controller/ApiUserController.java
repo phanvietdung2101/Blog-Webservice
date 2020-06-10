@@ -16,7 +16,7 @@ public class ApiUserController {
     @Autowired
     UserServiceImpl userService;
 
-    @PostMapping("/api/user/create-user")
+    @PostMapping("/api/user")
     public ResponseEntity<Void> createUser(@RequestBody User user){
         userService.addNewUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -24,8 +24,20 @@ public class ApiUserController {
 
     @GetMapping("/api/user/{id}")
     public ResponseEntity<User> getUser(@PathVariable long id){
-        Optional<User> optionalUser = userService.findUserById(id);
+            Optional<User> optionalUser = userService.findUserById(id);
         return optionalUser.map(user -> new ResponseEntity<>(user, HttpStatus.FOUND))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @PutMapping("/api/user/{id}")
+    public ResponseEntity<User> updateUser(@RequestBody User user,@PathVariable long id){
+        Optional<User> optionalUser = userService.findUserById(id);
+        if(!optionalUser.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.setId(id);
+        userService.updateUser(user);
+        return new ResponseEntity<User>(HttpStatus.OK);
+    }
+
 }

@@ -44,7 +44,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
     public Optional<Role> findRoleByRoleName(String role_name) {
         return roleRepository.findRoleByName(role_name);
     }
+
+
 }
