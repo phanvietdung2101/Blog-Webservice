@@ -2,6 +2,7 @@ package com.yyy.blog.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,11 +17,12 @@ public class User {
     private long id;
 
     @NotEmpty
-    @Length(min = 4, max = 50)
+    @Length(min = 6, max = 50)
     private String username;
 
     @NotEmpty
-    @Length(min = 4, max = 50)
+    @Length(min = 6, max = 50)
+    @UniqueElements
     private String password;
 
     @Email
