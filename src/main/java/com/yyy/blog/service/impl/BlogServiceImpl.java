@@ -14,25 +14,6 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogRepository blogRepository;
 
-    @Override
-    public List<Blog> findAllBlogNewest(){
-       return this.blogRepository.findAllByOrderByIdDesc();
-    }
-
-    @Override
-    public void createNewBlog(Blog blog){
-        this.blogRepository.save(blog);
-    }
-
-    @Override
-    public void updateBlog(Blog blog, Long id) {
-        Optional<Blog> optionalBlog = this.blogRepository.findById(id);
-        if(!optionalBlog.isPresent()){
-            throw new RuntimeException("this blog id isn't existed");
-        }
-        blog.setId(id);
-        this.blogRepository.save(blog);
-    }
 
 
 
