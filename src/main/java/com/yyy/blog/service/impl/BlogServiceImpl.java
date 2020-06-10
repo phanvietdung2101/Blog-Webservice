@@ -15,7 +15,24 @@ public class BlogServiceImpl implements BlogService {
     BlogRepository blogRepository;
 
 
+    @Override
+    public List<Blog> findAllNewestBlog() {
+        return blogRepository.findAllByOrderByIdDesc();
+    }
 
+    @Override
+    public Blog save(Blog blog) {
+        return blogRepository.save(blog);
+    }
 
+    @Override
+    public void delete(Long id) {
+        blogRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Blog> findById(Long id) {
+        return blogRepository.findById(id);
+    }
 
 }

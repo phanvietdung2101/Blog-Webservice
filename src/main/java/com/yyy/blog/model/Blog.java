@@ -33,4 +33,7 @@ public class Blog {
 
     @OneToMany
     private List<Comment> commentList;
+
+    @ManyToOne
+    private Category category;
 }
