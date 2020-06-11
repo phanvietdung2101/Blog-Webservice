@@ -6,12 +6,14 @@ import com.yyy.blog.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
+@EnableResourceServer
 public class ApiUserController {
     @Autowired
     UserServiceImpl userService;
@@ -39,5 +41,7 @@ public class ApiUserController {
         userService.updateUser(user);
         return new ResponseEntity<User>(HttpStatus.OK);
     }
+
+
 
 }
