@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
@@ -22,6 +23,14 @@ public class ApiUserController {
     public ResponseEntity<Void> createUser(@RequestBody User user){
         userService.addNewUser(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/api/user")
+    public ResponseEntity<User> getUser(Principal principal){
+        String username = principal.getName();
+        Optional<User> optionalUser = userService.findUserByUsername(username);
+        return optionalUser.map(user -> new ResponseEntity<>(user, HttpStatus.FOUND))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/api/user/{id}")

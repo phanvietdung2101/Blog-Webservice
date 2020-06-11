@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -75,7 +79,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
-                user.getPassword(),
+                passwordEncoder.encode(user.getPassword()),
                 authorities);
 
         return userDetails;
