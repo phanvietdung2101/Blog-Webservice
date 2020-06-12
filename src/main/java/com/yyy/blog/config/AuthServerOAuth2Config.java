@@ -12,9 +12,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Configuration
 @EnableAuthorizationServer
+@CrossOrigin("*")
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -48,4 +50,6 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     public TokenStore tokenStore() {
         return new InMemoryTokenStore();
     }
+
+
 }
