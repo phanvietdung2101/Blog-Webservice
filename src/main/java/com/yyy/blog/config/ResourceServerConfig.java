@@ -16,9 +16,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             "/api/user/register","/api/blog"
     };
 
-
-
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()

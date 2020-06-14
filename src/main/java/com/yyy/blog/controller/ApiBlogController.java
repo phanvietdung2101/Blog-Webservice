@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
+@EnableResourceServer
 public class ApiBlogController {
     @Autowired
     BlogServiceImpl blogService;
@@ -51,16 +52,58 @@ public class ApiBlogController {
     }
 
     @PutMapping("/api/blog/{id}")
-    public ResponseEntity<Blog> updateBlog(@RequestBody Blog blog,@PathVariable Long id){
-        Optional<Blog> optionalBlog = blogService.findById(id);
-        if(!optionalBlog.isPresent())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(blog,HttpStatus.OK);
+    public ResponseEntity<Blog> updateBlog(@RequestBody Blog blog,@PathVariable Long id,Principal principal){
+        Optional<User> optionalUser;
+        Optional<Blog> optionalBlog;
+        try {
+            optionalUser = userService.findUserByUsername(principal.getName());
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        optionalBlog = blogService.findById(id);
+        if(optionalBlog.isPresent() && optionalUser.isPresent()){
+            User currentUser = optionalUser.get();
+            Blog currentBLog = optionalBlog.get();
+            User blogOwner = currentBLog.getUser();
+            if (currentUser.getId() != blogOwner.getId()){
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            // Xac thuc thanh cong
+            blog.setId(id);
+            blogService.save(blog);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @DeleteMapping("/api/blog/{id}")
-    public ResponseEntity<Blog> deleteBlog(@PathVariable long id){
-        blogService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Blog> deleteBlog(@PathVariable long id,Principal principal){
+       if(!authUserOwner(id,principal)){
+           return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+       }
+       blogService.delete(id);
+       return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private boolean authUserOwner(long blogId, Principal principal){
+        try {
+            Optional<User> optionalUser = userService.findUserByUsername(principal.getName());
+            Optional<Blog> optionalBlog = blogService.findById(blogId);
+            if(optionalBlog.isPresent() && optionalUser.isPresent()) {
+                Blog blog = optionalBlog.get();
+                User currentUser = optionalUser.get();
+                User blogOwner = blog.getUser();
+                if(currentUser.getId() == blogOwner.getId()){
+                    return true;
+                }
+            }
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
+        }
+        return false;
     }
 }

@@ -18,6 +18,6 @@ public class RegisterUserController {
     @PostMapping("/api/user/register")
     public ResponseEntity<Void> createUser(@RequestBody User user){
         userService.addNewUser(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
