@@ -21,7 +21,7 @@ public class Blog {
 
     @Column(columnDefinition="TEXT",length = 50000)
     @NotEmpty
-    @Length(min = 100)
+    @Length(min = 10)
     private String content;
 
     @ManyToOne
