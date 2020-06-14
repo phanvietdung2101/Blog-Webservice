@@ -19,12 +19,6 @@ public class ApiUserController {
     @Autowired
     UserServiceImpl userService;
 
-    @PostMapping("/api/user")
-    public ResponseEntity<Void> createUser(@RequestBody User user){
-        userService.addNewUser(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @GetMapping("/api/user")
     public ResponseEntity<User> getUser(Principal principal){
         String username = principal.getName();

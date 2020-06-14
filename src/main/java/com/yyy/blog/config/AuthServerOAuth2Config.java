@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Configuration
 @EnableAuthorizationServer
-@CrossOrigin("*")
 public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private AuthenticationManager authenticationManager;

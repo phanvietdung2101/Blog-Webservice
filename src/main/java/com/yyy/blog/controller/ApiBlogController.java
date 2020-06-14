@@ -7,6 +7,7 @@ import org.jboss.logging.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
+@EnableResourceServer
 public class ApiBlogController {
     @Autowired
     BlogServiceImpl blogService;
