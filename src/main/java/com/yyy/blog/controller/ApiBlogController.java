@@ -80,8 +80,10 @@ public class ApiBlogController {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
             // Xac thuc thanh cong
-            blog.setId(id);
-            blogService.save(blog);
+            currentBLog.setTitle(blog.getTitle());
+            currentBLog.setContent(blog.getContent());
+            currentBLog.setCategory(blog.getCategory());
+            blogService.save(currentBLog);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
