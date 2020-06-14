@@ -35,6 +35,16 @@ public class ApiBlogController {
             return new ResponseEntity<List<Blog>>(blogList,HttpStatus.OK);
     }
 
+    @GetMapping("/api/blog/{id}")
+    public ResponseEntity<Blog> getBlogById(@PathVariable long id){
+        Optional<Blog> optionalBlog = blogService.findById(id);
+        if(!optionalBlog.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Blog blog = optionalBlog.get();
+        return new ResponseEntity<Blog>(blog,HttpStatus.OK);
+    }
+
     @PostMapping("/api/blog")
     public ResponseEntity<Blog> createBlog(@RequestBody Blog blog, Principal principal){
         try {
